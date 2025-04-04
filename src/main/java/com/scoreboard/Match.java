@@ -1,11 +1,12 @@
 package com.scoreboard;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class Match {
 
-    private String homeTeamName;
-    private String awayTeamName;
+    private final String homeTeamName;
+    private final String awayTeamName;
     private int homeTeamScore;
     private int awayTeamScore;
     private final LocalDateTime startTime;
@@ -32,16 +33,8 @@ public class Match {
         return homeTeamName;
     }
 
-    public void setHomeTeamName(String homeTeamName) {
-        this.homeTeamName = homeTeamName;
-    }
-
     public String getAwayTeamName() {
         return awayTeamName;
-    }
-
-    public void setAwayTeamName(String awayTeamName) {
-        this.awayTeamName = awayTeamName;
     }
 
     public int getHomeTeamScore() {
@@ -62,6 +55,18 @@ public class Match {
 
     public LocalDateTime getStartTime() {
         return startTime;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Match match = (Match) o;
+        return Objects.equals(homeTeamName, match.homeTeamName) && Objects.equals(awayTeamName, match.awayTeamName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homeTeamName, awayTeamName);
     }
 
     @Override
