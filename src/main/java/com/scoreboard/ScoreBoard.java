@@ -25,13 +25,11 @@ public class ScoreBoard {
         matches.removeIf(m -> m.getHomeTeamName().equals(homeTeamName) && m.getAwayTeamName().equals(awayTeamName));
     }
 
-    public void updateScore(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) {
-        for (Match match : matches) {
-            if (match.getHomeTeamName().equals(homeTeamName) && match.getAwayTeamName().equals(awayTeamName)) {
-                match.updateScore(homeTeamScore, awayTeamScore);
-                break;
-            }
-        }
+    public void updateScore(String homeTeamName, String awayTeamName, int homeTeamScore, int awayTeamScore) throws ClassNotFoundException {
+        Match match = matches.stream().filter(s -> s.getHomeTeamName().equals(homeTeamName)
+                && s.getAwayTeamName().equals(awayTeamName)).findFirst().orElseThrow(() -> new ClassNotFoundException("Not Found"));
+        ;
+        match.updateScore(homeTeamScore,awayTeamScore);
     }
 
     public List<Match> getSummary() {
