@@ -10,8 +10,16 @@ public class ScoreBoard {
     private final List<Match> matches = new ArrayList<>();
 
     public void startGame(String homeTeamName, String awayTeamName) {
+        try {
+            Thread.sleep(10); //mili
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         matches.add(new Match(homeTeamName, awayTeamName));
     }
+//public void startGame(String homeTeamName, String awayTeamName) {
+//    matches.add(new Match(homeTeamName, awayTeamName));
+//}
 
     public void finishGame(String homeTeamName, String awayTeamName) {
         matches.removeIf(m -> m.getHomeTeamName().equals(homeTeamName) && m.getAwayTeamName().equals(awayTeamName));
@@ -29,7 +37,8 @@ public class ScoreBoard {
     public List<Match> getSummary() {
         return matches.stream()
                 .sorted(Comparator.comparingInt(Match::totalScore).reversed()
-                        .thenComparing(Match::getStartTime).reversed())
+                        .thenComparing((m1, m2) -> m2.getStartTime().compareTo(m1.getStartTime())))
                 .collect(Collectors.toList());
     }
+
 }
